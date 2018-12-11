@@ -40,3 +40,8 @@ title("An Excemple of Creative Axes",
 	xlab="X values",
 	ylab="Y=X")
 par(oper)
+
+####次要刻度线设置
+install.packages(Himsc)
+library(Hmisc)
+minor.tick(nx=n,ny=n,tick.ration=n)
