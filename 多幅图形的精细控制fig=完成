@@ -1,0 +1,21 @@
+opar<-par(no.readonly=TRUE)#生成一个可以修改的图形参数列表
+par(fig=c(0,0.8,0,0.8))# 设置散点图，fig=的取值是形如c(x1,x2,x3,x4)的数值向量
+#par(fig=c(0,1.2,0,1.2))
+#par(fig=c(0,0.4,0,0.9))
+#par(fig=c(0,1,0,1))
+plot(mtcars$wt,mtcars$mpg,
+	xlab="Miles Per Gallon",
+	ylab="Car Weight")
+#par(fig=c(0,0.8,0.4,1),new=TRUE)#在上方添加箱线图,添加到有图形的图上时，设置NEW=TRUE
+par(fig=c(0,0.8,0.55,1),new=TRUE)
+boxplot(mtcars$wt,horizontal=TRUE,axes=FALSE)#axes=FALSE暂时停止坐标轴生成
+
+#par(fig=c(0.55,1,0,0.8),new=TRUE)#在右侧添加箱线图
+par(fig=c(0.65,1,0,0.8),new=TRUE)#在右侧添加箱线图
+boxplot(mtcars$mpg,axes=FALSE)
+#text（）函数与mtext（）函数将文本添加到图形上
+#text（）可向绘图区内部添加文本
+#mtext（）则向图形的四个边界之一添加文本
+mtext("Enhanced Scatterplot",side=3,outer=TRUE,line=-3)
+par(oper)
+#dev.new()#打开新图形页
