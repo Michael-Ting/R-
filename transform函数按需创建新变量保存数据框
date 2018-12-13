@@ -1,0 +1,17 @@
+a<-c(2,3,4,5)
+b<-c(6,7,8,9)
+cc<-c(11,34,56,77)
+mydata<-data.frame(a,b,cc)
+mydata
+attach(mydata)
+a[2]+b[2]
+sumab<-(a[2]+b[2])/2
+sumab
+(mydata$a+mydata$b)/2
+detach(mydata)
+###tranform（）简化了以上方法，并按需创建新变量保存到数据框
+transform(mydata,
+			    sumab<-a+b,
+		 	    meanab<-(a+b)/2)
+transform(mydata,d=-c(5,9,33,54))#函数内用“="不用“<-”赋值
+new_mydata
