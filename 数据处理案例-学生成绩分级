@@ -1,0 +1,38 @@
+library(MASS)
+options(digits=3)
+set.seed(1234)#设定随机数种子
+mean<-c(230.7,146.7,3.6)
+sigma<-matrix(c(15360.8,6721.2,-47.1,6721.2,4700.9,-16.5,-47.1,-16.5,0.3),nrow=3,ncol=3)
+#生成数据
+mydata<-mvrnorm(500,mean,sigma)#指定均值与协方差阵，并生成500个伪随机观测
+mydata<-as.data.frame(mydata)#矩阵转换为数据框
+names(mydata)<-c("y","x1","x2")#为变量指定名称
+mydata
+dim(mydata)#行列数量
+head(mydata,n=10)
+################################################cat()函数
+#\t是制表符
+#\n表示新行
+#\'是单引号
+#\b为退格
+name<-"Bob"
+cat("Hello",name,"\b.\n","Isn\'t R","\t","GREAT?\n")
+#########################################################数据处理难题的一套解决方案
+#将学生的各科成绩组合为单一的成绩衡量指标，基于相对名次（前20%，下20%，等等）给出从A到F的评分
+#根据学生姓氏和名字的首字母对花名册进行排序
+options(digits=2)#限定小数点
+student<-c("John Davis","Angela William","Bullwinkle Moose","David Jones",
+	   "Janice Markhammer","Chery1 Cushing","Reuven Ytzrhak","Greg Knox",
+	   "Joel England","Mary Rayburn")
+Math<-c(502,600,412,358,495,512,410,625,573,522)
+Science<-c(95,99,80,82,75,85,80,95,89,86)
+English<-c(25,22,18,15,20,28,15,30,27,18)
+roster<-data.frame(student,Math,Science,English,stringAsFactors=FALSE)
+z<-scale(roster[,2:4])
+score<-apply(z,1,mean)#1代表行，表示求行的均值
+roster<-cbind(roster,score)#合并
+y<-quantile(score,c(.8,.6,.4,.2))
+roster$grade[score>=y[1]]<-"A"
+roster$grade[score<y[1]&score>=y[2]]<-"B"
+rester$grade[score<y[2]&score>=y[3]]<-"C"
+rester$grade[score<y[3]&score>=y[4]]<-"D"
