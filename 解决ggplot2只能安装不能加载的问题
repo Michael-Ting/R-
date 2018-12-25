@@ -33,7 +33,7 @@ install.packages("ggplot2")
 */
 > library(ggplot2)
 > 
-ggplot(data=mtcars,aes(x=wt,y=mpg))+
-geom_point(pch=17,color="blue",size=2)+
-geom_smooth(method="Im",color="red",linetype=2)+
-labs(title="TEST",x="Weight",y='Miles Per Gallon')
+ggplot(data=mtcars,aes(x=wt,y=mpg))+   #x为wt，y为mpg
+geom_point(pch=17,color="blue",size=2)+ #用geom_point函数设置点的形状为三角形，点的大小加倍2倍
+geom_smooth(method="Im",color="red",linetype=2)+  #线性拟合，线条为虚线（linetype=2）默认线条尺寸size为1，平滑的曲线包括在95%置信区间内
+labs(title="TEST",x="Weight",y='Miles Per Gallon')  #labs函数是可选的，可添加注释（包括轴标签与标题）
