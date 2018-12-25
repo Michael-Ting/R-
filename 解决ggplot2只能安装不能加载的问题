@@ -1,0 +1,35 @@
+先安装colorspace包，可以观望下载，也可在R的程序包点击安装程序包，选择colorspace包
+install.packages("ggplot2")
+/*
+程序包‘glue’打开成功，MD5和检查也通过
+程序包‘magrittr’打开成功，MD5和检查也通过
+程序包‘stringi’打开成功，MD5和检查也通过
+程序包‘assertthat’打开成功，MD5和检查也通过
+程序包‘fansi’打开成功，MD5和检查也通过
+程序包‘utf8’打开成功，MD5和检查也通过
+程序包‘Rcpp’打开成功，MD5和检查也通过
+程序包‘stringr’打开成功，MD5和检查也通过
+程序包‘labeling’打开成功，MD5和检查也通过
+程序包‘munsell’打开成功，MD5和检查也通过
+程序包‘R6’打开成功，MD5和检查也通过
+程序包‘RColorBrewer’打开成功，MD5和检查也通过
+程序包‘cli’打开成功，MD5和检查也通过
+程序包‘crayon’打开成功，MD5和检查也通过
+程序包‘pillar’打开成功，MD5和检查也通过
+程序包‘digest’打开成功，MD5和检查也通过
+程序包‘gtable’打开成功，MD5和检查也通过
+程序包‘lazyeval’打开成功，MD5和检查也通过
+程序包‘plyr’打开成功，MD5和检查也通过
+程序包‘reshape2’打开成功，MD5和检查也通过
+程序包‘rlang’打开成功，MD5和检查也通过
+程序包‘scales’打开成功，MD5和检查也通过
+程序包‘tibble’打开成功，MD5和检查也通过
+程序包‘viridisLite’打开成功，MD5和检查也通过
+程序包‘withr’打开成功，MD5和检查也通过
+程序包‘ggplot2’打开成功，MD5和检查也通过
+
+下载的二进制程序包在
+        C:\Users\acer\AppData\Local\Temp\RtmpCEVYUt\downloaded_packages里
+*/
+> library(ggplot2)
+> 
