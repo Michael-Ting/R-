@@ -1,0 +1,50 @@
+myvars<-c("mpg","hp","wt")
+head(mtcars[,myvars])
+#通过sapply（）计算描述统计量
+mystats<-function(x,na.omit=FALSE){#false是非缺失值
+if(na.omit)
+	x<-x[!is.na(x)]#取出不为NA的元素
+m<-mean(x)
+n<-length(x)
+s<-sd(x)
+skew<-sum((x-m)^3/s^3)/n
+kurt<-sum((x-m)^4/s^4)/n-3
+return(c(n=n,mean=m,stdev=s,skew=skew,kurtosis=kurt))
+}
+myvars<-c("mpg","hp","wt")
+sapply(mtcars[myvars],mystats)
+
+#方法2：describe()函数返回变量和观测的数量、缺失值和唯一值的数目、平均值、分位数、以及5个最大与最小值
+install.packages("Hmisc")
+library(Hmisc)
+myvars<-c("mpg","hp","wt")
+describe(mtcars[myvars])
+#方法3 pastecs包的stat.desc()函数，计算种类繁多的描述性统计量
+/*stat.desc(x,basic=TRUE,desc=TRUE,norm=FALSE,p=0.95) x是数据框或者时间序列，basic=TRUE默认
+则计算所有值、空值、缺失值的数量，以及最小值、最大值、值域、总和，desc=TRUE则计算中位数、平均数、平均数的标准误等
+若norm=TRUE则返回正态分布统计量，包括偏度和峰度和shapiro-Wilk正态检验结果
+*/
+library(pastecs)
+myvars<-c("mpg","hp","wt")
+stst.desc(mtcars[myvars])
+#方法3 psych包的describe()
+
+--------------------------------------------------------分组计算描述性统计量
+#分组计算描述性统计量aggregate()---该函数类似sql的group by 缺点：仅返回指定的值，by（）可以解决
+myvars<-c("mpg","hp","wt")
+aggregate(mtcars[myvars],by=list(am=mtcars$am),mean) #am是变速箱类型，0表示自动挡和1表示手动挡
+aggregate(mtcars[myvars],by=list(am=mtcars$am),sd)
+
+#使用by（）分组计算
+dstats<-function(x)sapply(x,mystats)
+myvars<-c("mpg","hp","wt")
+by(mtcars[myvars],mtcars$am,dstats)
+
+#使用doBy包的summaryBy（）
+library(doBy)
+summaryBy(mpg+hp+wt~am,data=mtcars,FUN=mtstats)
+
+#使用psych包的describeBy（）分组计算
+library(psych)
+myvars<-c("mpg","hp","wt")
+describeBy(mtcars[myvars],list(am=mtcars$am))
