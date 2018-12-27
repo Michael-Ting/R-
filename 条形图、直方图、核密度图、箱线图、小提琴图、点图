@@ -74,3 +74,19 @@ boxplot(mpg~am.f*cyl.f,
 	col=c("gold","darkgreen"),
 	main="MPG Distribution by Auto Type",
 	xlab="Auto Type",ylab="Miles Per Gallon")
+#小提琴图 ---箱线图与核密度图的结合
+#vioplot(x1,x2,...,names=(),col=)#names是字符向量
+install.packages("vioplot")
+library(vioplot)
+x1<-mtcars$mpg[mtcars$cyl==4]
+x2<-mtcars$mpg[mtcars$cyl==6]
+x3<-mtcars$mpg[mtcars$cyl==8]
+vioplot(x1,x2,x3,names=c("4 cyl","6 cyl","8 cyl"),col="red")
+title("Violin Plots of Miles Per Gallon",
+	ylab="Miles Per Gallon",xlab="Number of Cylinders")
+
+#点图 dotchart(x,labels=)在简单水平刻度上绘制大量有标签值的方法
+dotchart(mtcars$mpg,labels=row.names(mtcars),cex=.7,
+	main="Gas Mileage for Car Models",
+	xlab="Miles Per Gallon")
+
