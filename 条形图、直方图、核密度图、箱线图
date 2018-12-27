@@ -1,0 +1,76 @@
+ggplot(data=mtcars,aes(x=wt,y=mpg))+
+geom_point(pch=17,color="blue",size=2)+
+geom_smooth(method="Im",color="red",linetype=2)+
+labs(title="TEST",x="Weight",y='Miles Per Gallon')
+
+install.packages("vcd")
+library(vcd)
+#简单的条形图
+counts<-table(Arthritis$Improved)#数据
+counts
+Arthritis
+sum(is.na(Arthritis))#计算缺失值数量
+barplot(counts,main="Simple Bar Plot",
+	xlab="Improvement",ylab="Frequency")
+barplot(counts,main="Horizontal Bar Plot",
+	xlab="Frequency",ylab="Improvement",
+	horiz=TRUE)# 水平
+#堆砌条形图与分组条形图
+counts2<-table(Arthritis$Improved,Arthritis$Treatment)
+counts2
+barplot(counts2,main="Stacked Bar Plot",
+	xlab="Treatment",ylab="Frequency",
+	col=c("red","blue","yellow"),
+	legend=rownames(counts2),beside=TRUE)#beside=TRUE则矩阵中每一列表示一个分组，将是分列而不是堆砌
+#直方图
+par(mfrow=c(2,2))
+hist(mtcars$mpg)
+hist(mtcars$mpg,breaks=12,#将组数指定为12
+	col="red",
+	xlab="Miles Per Gallon",
+	main="Colored histogram with 12 bins")
+hist(mtcars$mpg,freq=FALSE,#FALSE表示根据概率密度而不是频数绘制
+	breaks=12,#将组数指定为12
+	col="red",
+	xlab="Miles Per Gallon",
+	main="Histogram,rug plot,density curve")
+rug(jitter(mtcars$mpg))#添加轴须图，可以显示实际数据的分布
+lines(density(mtcars$mpg),col="blue",lwd=2)#plot（density(x))是核密度函数，用lines向前图叠加核密度图
+
+x<-mtcars$mpg
+h<-hist(x,breaks=12,#将组数指定为12
+	col="red",
+	xlab="Miles Per Gallon",
+	main="Histogram,rug plot,density curve and box")
+xfit<-seq(min(x),max(x),length=40)  #seq(from,to,length),该函数的意思是生成一组数字，从from开始，到to结束，每两个数间的间隔是length
+yfit<-dnorm(xfit,mean=mean(x),sd=sd(x)) #dnorm(x, mean = 0, sd = 1, log = FALSE) 的返回值是正态分布概率密度函数值
+yfit<-yfit*diff(h$mids[1:2]*length(x))#频数=频率/组距∗组距∗样本总数=密度∗组距∗样本总数，即yfit<−yfit∗diff(hmids[1:2])*length(x)
+lines(xfit,yfit,col="blue",lwd=2) #plot重新生成图，所以用lines函数在原图叠加双倍默认线条的曲线
+box()  #加边框
+
+
+#核密度图
+dev.new()
+plot(density(mtcars$mpg))
+#箱线图
+boxplot(mtcars$mpg,main="Box plot",ylab="Miles per Gallon")
+#使用并列箱线图进行跨组比较
+mtcars
+#注意以下图八缸有一个离群点
+boxplot(mpg~cyl,data=mtcars, #以cyl分类，mpg与cyl两两组合生成数值型变量，这里指研究四缸，六缸，八缸发动机对每加仑汽油形式的英里数的影响
+	main="Car Mileage Data",
+	xlab="Number of Cylinders",
+	ylab="Miles Per Gallon")
+#两个交叉因子的箱线图
+mtcars$cyl.f<-factor(mtcars$cyl,
+	levels=c(4,6,8),
+	labels=c("4","6","8"))
+mtcars$am.f<-factor(mtcars$am,
+	levels=c(0,1),
+	labels=c("auto","standard"))
+boxplot(mpg~am.f*cyl.f,
+	data=mtcars,
+	varwidth=TRUE,#使箱线图的宽度与其样本大小的平方根成正比
+	col=c("gold","darkgreen"),
+	main="MPG Distribution by Auto Type",
+	xlab="Auto Type",ylab="Miles Per Gallon")
