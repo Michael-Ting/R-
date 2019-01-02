@@ -1,0 +1,72 @@
+/*一元线性回归预测：销售收入与广告支出实战-2019-1-2
+1、确定y与x的关系
+2、建立模型，并对模型做估计与预测
+3、利用回归方程预测
+4、对回归模型进行诊断
+
+数据集为example9_1
+*/
+install.packages("xlsx")
+library(xlsx)
+example9_1<-read.xlsx2(file="E:\\ruanjian\\R-3.2.3\\mydata\\一元线性回归实战.xlsx",sheetIndex=1,head=T)
+/*car包画图  失败，提示：Error in oldClass(stats) <- cl : 无法为不适当的对象加"factor" 类别
+install.packages('car')
+library('car')
+scatterplot(sales~out,data=example9_1,spread=F,lty.smooth=1,pch=18,xlab="销售收入",ylab="广告支出",cex.lab=0.7,family='SimSun')
+*/
+attach(example9_1)
+opar<-par(no.readonly=TRUE)
+par(pch=17,lty=2)
+sales<-as.numeric(as.character(sales)) #不能直接转数值型，否则100会是1，00是2，先转字符型后再转数值型
+out<-as.numeric(as.character(out)) 
+str(sales)#查看sales是否成功转为数值型而不是因子型
+head(example9_1)#前六行观测值
+plot(sales,out)#需要attach锁定数据框，不然需要指明是哪个数据的sales与put变量，否则提示变量不存在
+#得到y与x存在明显的线性关系的结论
+
+cor(sales,out)#关系强度的度量，也叫person相关系数
+#相关系数的检验拥有t分布检验
+/*提出假设后计算统计变量t
+原假设：两个变量的线性关系不显著
+备用假设：两个变量的关系显著*/
+
+install.packages("psych")
+library(psych)
+cor.test(sales,out)
+/*结果展示
+        Pearson's product-moment correlation
+
+data:  sales and out
+t = 11.372, df = 18, p-value = 1.193e-09
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.8445576 0.9751407
+sample estimates:
+      cor 
+0.9369195 
+--------------------------------------------
+统计量p值小于0.05，sales与put显著相关，接下来做一元线性回归
+*/
+example9_1<-as.numeric(as.character(example9_1))
+md<-lm(sales~out)
+summary(md)
+/*结果展示
+Call:
+lm(formula = sales ~ out)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-766.92 -274.83  -27.54  174.22  900.18 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 2345.3901   274.8193   8.534 9.64e-08 ***
+out            5.6721     0.4988  11.372 1.19e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 39：4.5 on 18 degrees of freedom
+Multiple R-squared:  0.8778,    Adjusted R-squared:  0.871 
+F-statistic: 129.3 on 1 and 18 DF,  p-value: 1.193e-09
+*/
+未完待续：https://mp.weixin.qq.com/s?__biz=MzA3MTM3NTA5Ng==&mid=2651060000&idx=1&sn=0f3ede69c91eb7df503a3ea6407be882&chksm=84d9d6b7b3ae5fa1b461c25f9c5aaad44b8f8639df356471e3741a3fd8a044de7b822e72c7ed&mpshare=1&scene=1&srcid=010251DTCblXRCUyHYqBO1cU&pass_ticket=2WtJd2XwOY4wrw3vl8RIeLvkKBURG6vQyizNa4V58fSfAVBQVKZCSb0WYopDlgN5#rd
